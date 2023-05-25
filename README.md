@@ -19,7 +19,7 @@ If the script worked as spected, this would be the terminal output
 <td>
   <img align="left" src="Images/TerminalOutput.png" width="260"/>
 </td>
-
+<br />
 
 otherwhise, error messages would appear.
 
