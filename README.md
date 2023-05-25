@@ -2,7 +2,7 @@
 <a href="http://simbad.cds.unistra.fr/simbad/sim-basic?Ident=NGC6793&submit=SIMBAD+search">SIMBAD reference</a>
 * Input:
   * DATA folder:
-  * * BIAS folder:
+    * BIAS folder:
    * DARKS folder:
    * FLATS folder:
    * SCIENCE folder:
