@@ -6,16 +6,20 @@
     * DARKS folder:
     * FLATS folder:
     * SCIENCE folder:
-* OUTPUT:
+* Output:
   * Results folder:
     * masterbias.fit
     * DARKS folder:
     * FLATS folder:
     * SCIENCE folder:
+    *log.txt :
+
+
+If the script worked as spected, this would be the terminal output
 <td>
   <img align="left" src="Images/TerminalOutput.png" width="260"/>
 </td>
-
+otherwhise, error messages would appear.
 <!-- START OF LICENSE -->
 <p xmlns:dct="http://purl.org/dc/terms/" xmlns:cc="http://creativecommons.org/ns#" class="license-text">
   <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
