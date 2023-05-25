@@ -16,10 +16,9 @@
 
 
 If the script worked as spected, this would be the terminal output
-<td>
-  <img align="left" src="Images/TerminalOutput.png" width="260"/>
-</td>
-<br />
+<p align="center">
+  <img src="Images/TerminalOutput.png" width="260" />
+</p>
 
 otherwhise, error messages would appear.
 
