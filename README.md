@@ -7,7 +7,7 @@
     * FLATS folder:
     * SCIENCE folder:
 * OUTPUT:
- * Results folder:
+  * Results folder:
   * masterbias.fit
   * DARKS folder:
   * FLATS folder:
