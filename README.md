@@ -3,9 +3,9 @@
 * Input:
   * DATA folder:
     * BIAS folder:
-   * DARKS folder:
-   * FLATS folder:
-   * SCIENCE folder:
+    * DARKS folder:
+    * FLATS folder:
+    * SCIENCE folder:
 * OUTPUT:
 <td>
   <img align="left" src="Images/TerminalOutput.png" width="260"/>
