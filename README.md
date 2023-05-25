@@ -8,9 +8,10 @@
     * SCIENCE folder:
 * OUTPUT:
   * Results folder:
-  * masterbias.fit
-  * DARKS folder:
-  * FLATS folder:
+    * masterbias.fit
+    * DARKS folder:
+    * FLATS folder:
+    * SCIENCE folder:
 <td>
   <img align="left" src="Images/TerminalOutput.png" width="260"/>
 </td>
