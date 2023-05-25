@@ -1,18 +1,18 @@
 # Photometric catalog of the NGC 6793 Open Cluster
 <a href="http://simbad.cds.unistra.fr/simbad/sim-basic?Ident=NGC6793&submit=SIMBAD+search">SIMBAD reference</a>
 * Input:
-  * DATA folder:
-    * BIAS folder:
-    * DARKS folder:
-    * FLATS folder:
-    * SCIENCE folder:
+  * DATA folder: 
+    * BIAS folder: TBA
+    * DARKS folder: TBA
+    * FLATS folder: TBA
+    * SCIENCE folder: TBA
 * Output:
   * Results folder:
     * masterbias.fit
-    * DARKS folder:
-    * FLATS folder:
-    * SCIENCE folder:
-   * log.txt :
+    * DARKS folder: TBA
+    * FLATS folder: TBA
+    * SCIENCE folder: TBA
+   * log.txt : TBA
 
 
 If the script worked as spected, this would be the terminal output
