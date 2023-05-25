@@ -12,7 +12,7 @@
     * DARKS folder:
     * FLATS folder:
     * SCIENCE folder:
-    *log.txt :
+   * log.txt :
 
 
 If the script worked as spected, this would be the terminal output
