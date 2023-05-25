@@ -1,10 +1,10 @@
 # Photometric catalog of the NGC 6793 Open Cluster
 <a href="http://simbad.cds.unistra.fr/simbad/sim-basic?Ident=NGC6793&submit=SIMBAD+search">SIMBAD reference</a>
 <p float="left">
-  <img src="Images/rSDSS.png" width="300" />
-  <img src="Images/gSDSS.png" width="300" /> 
-  <img src="Images/Ha.png" width="300" />
-  <img src="Images/OIII.png" width="300" />
+  <img src="Images/rSDSS.png" width="250" />
+  <img src="Images/gSDSS.png" width="250" /> 
+  <img src="Images/Ha.png" width="250" />
+  <img src="Images/OIII.png" width="250" />
 </p>
 * Input:
   * DATA folder: 
