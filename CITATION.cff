@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Cano Jones"
+  given-names: "Alejandro"
+title: "Photometric catalog of NGC-6793"
+date-released: June 2023
+url: "https://github.com/Cano-Jones/Photometric-catalog-of-NGC-6793"
