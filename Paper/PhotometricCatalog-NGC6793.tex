@@ -41,11 +41,11 @@
   % {} leave it empty if necessary  
    {}
   % aims heading (mandatory)
-   {...}
+   {This study aims to be able to present the procedure and methodology used to create a star catalog of the NGC 6793 and surrounding area, from raw images taken from an on site observation.}
   % methods heading (mandatory)
-   {...}
+   {In order to obtain the above-mentioned catalog, a set of astronomical images of the NGC 6793 open cluster were taken using the $T80$-telescope at the Centre for the Dissemination and Practice of Astronomy: Galactica. Then, the raw images were calibrated and cleaned with a standard reduction procedure. Finally, the reduced images were used to detect the stars on the cluster alongside some data about them to create the catalog.}
   % results heading (mandatory)
-   {..}
+   {Using the obtained catalog, a set of Hertzsprung-Russell diagrams are shown and compared with previous studies and catalogs.}
   % conclusions heading (optional), leave it empty if necessary 
    {}
    
@@ -61,10 +61,10 @@
 
     The NGC 6793 open cluster was discovered (\cite{Seligman_2018}) by William Herschel the night of the 18Th of July of 1789, and was later cataloged by John Louis Emil Dreyer in his \textit{New General Catalogue of Nebulae and Clusters of Stars} (abbreviated NGC) with the simple description of ``a cluster, poor, a little compressed''. Is located in the Vulpecula constellation, close to the celestial equator with (\cite{SIMBAD}) celestial coordinates (J2000 equinox) 19h 23m 13s (RA) \& +22° 08’ 27” (DEC); its angular size is $27.2\times27.2$ arcmin and a parallax of $1.6672\pm 0.0021$ mas. 
 
-    Throughout this paper, the process by which a photometric catalogue of the NGC 6793 open cluster was obtained will be detailed; from on-site observations made at the main telescope in Galáctica (section \ref{sec: Photometric data collection}), passing through the reduction and calibration of the obtained photometric images (section \ref{sec: Image reduction and calibration}), up to the building of the catalog of stars present in the photometric images over four filters (section \ref{sec: Photometric catalogs}), from which some results will be extracted (section \ref{sec: Results}).
+    Throughout this paper, the process by which a photometric catalogue of the NGC 6793 open cluster was obtained will be detailed; from on-site observations made at the main telescope in Galactica (section \ref{sec: Photometric data collection}), passing through the reduction and calibration of the obtained photometric images (section \ref{sec: Image reduction and calibration}), up to the building of the catalog of stars present in the photometric images over four filters (section \ref{sec: Photometric catalogs}), from which some results will be extracted (section \ref{sec: Results}).
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Photometric data collection}\label{sec: Photometric data collection}
-    The photometric data collection was performed the night of the 20Th of April, 2023 at 02:41 LM, a night without moon and (at the time of observations) clear skies; using the 80cm (f/7) telescope at the Centre for the Dissemination and Practice of Astronomy: Galactica (Teruel, Spain). The telescope's  camera has a pixel of 0.5" and a field of view of $19\times19$ arcmin$^2$, ensuring that the whole cluster fits in one image. Previous work was made to ensure the visibility of the cluster using the online app \textit{Object Visivility-STARALT} (\cite{STARALT}) and estimates of the exposure times using the online app \textit{CAMELOT2 SNR calculator} (\cite{EXP_Calculator}).
+    The photometric data collection was performed the night of the 20Th of April, 2023 at 02:41 LM, a night without moon and (at the time of observations) clear skies; using the 80cm (f/7) $GT80$-telescope at the Centre for the Dissemination and Practice of Astronomy: Galactica (Teruel, Spain). 
     \begin{figure}[H]
       \centering
       \subfloat[][rSDSS]{\includegraphics[width=.4\linewidth]{Images/Raw_rSDSS.png}}\quad
@@ -74,7 +74,12 @@
       \caption{Raw photometric images for each filter.}
       \label{fig: Raw  Images}
     \end{figure}
-    Different images were taken with different exposure times (varying from 20s to 120s) depending on the used filter; the four chosen filters were: rSDSS, gSDSS, Ha and OIII. A sample of the raw images taken on site can be seen at figure \ref{fig: Raw  Images}.
+    
+    The telescope's  camera has a pixel of 0.5" and a field of view of $19\times19$ arcmin$^2$, ensuring that the whole cluster fits in one image. Previous work was made to ensure the visibility of the cluster using the online app \textit{Object Visibility-STARALT} (\cite{STARALT}) and estimates of the exposure times using the online app \textit{CAMELOT2 SNR calculator} (\cite{EXP_Calculator}).
+    
+    Different images were taken with different exposure times (varying from 20s to 120s) depending on the used filter; the four chosen filters were: rSDSS, gSDSS, Ha and OIII. A sample of the raw images taken on site can be seen at figure \ref{fig: Raw  Images} (images were made using the the SAO Image DS9 (\cite{DS9}) software).
+
+    
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Image reduction and calibration}\label{sec: Image reduction and calibration}
     It can be seen from the images in figure \ref{fig: Raw  Images} that there is great room for improvement, for starters, each of them (with varying degrees of notoriety) has a very obvious structure not originating from the sky. In order to clean this images, a reduction process was made to them.  As stated in the \textit{CCD Data Reduction Guide} (\cite{CCD_Guide}) the composition of a raw astronomical image can be interpreted as
@@ -84,13 +89,20 @@
     and thus, in order to get cleaner images (that is, a image consisting of sky, stars and random noise) a process to remove the bias, dark current and flat fielding must take place.
     
     The image reduction process was made by following the aforementioned \textit{CCD Data Reduction Guide}, which uses the \textit{ccdproc} python library (\cite{Python}). The complete python script alongside all the image files can be found at the \cite{GitHub} GitHub repository.
+
+    The images files were in \textit{.fit} format, comprised of a header (image metadata including image type, exposure time, used filter, RA, DEC but unfortunately it does not include a world coordinate system) and the image data (coded in the form of a matrix of CCD counts). 
+
+    As stated before, there are three effects that must be taken into account in order of cleaning the images: bias, dark and flat fielding; to remove these effects additional images must be taken. First kind of images are the Bias images, $0$s exposure readout of the CCD in order of estimating the voltage offset applied in order to not obtain negative counts. In total, 74 bias images were used for the reduction analysis, which were merged together averaging the number of counts of each pixel after a sigma-clipping process was made in order of eliminating cosmic rays and other punctual phenomena. The merged bias (named \textit{masterbias}) can be seen in figure \ref{fig: Bias and Dark} (a).
     \begin{figure}[H]
       \centering
       \subfloat[][Masterbias]{\includegraphics[width=.4\linewidth]{Images/masterbias.png}}\quad
-      \subfloat[][Masterdark]{\includegraphics[width=.4\linewidth]{Images/masterdark_120s.png}}
+      \subfloat[][Masterdark ($120$s)]{\includegraphics[width=.4\linewidth]{Images/masterdark_120s.png}}
       \caption{Images of combined bias and darks.}
       \label{fig: Bias and Dark}
     \end{figure}
+    Second kind are the Dark images, were the CCD is not exposed to light but the read out is non zero; to take into account the thermal and electronic noise. For four exposure times ($20$s, $30$s, $60$s and $120$s) 15 Dark images were taken. To merge (each exposure time separately) the darks, the same method as the Bias images were taken; the final product (named \textit{masterdark}) can be seen in figure \ref{fig: Bias and Dark} (b).  
+
+    The third and final king of images needed for the reduction process are the Flat Fielding images, these are images of short exposure taken of a uniform whit light (usually sky near zenith taken around sunrise or sunset) to correct the nonuniformity of the CCD in the response to light, filters are part of this effect, since light must pass through them, therefore, flats images for each filter must be taken. Since these are full exposure images, they do have a Bias and a Dark correction on them, and they must be removed before combining different (9 for the rSDSS and gSDSS, and 11 for the Ha and OIII filters) flats. To minimize noise, the Dark with closest exposure time to the Flat images must be the one to subtract, the Flat exposure times range from $2.1$s upto $20.1$s, and thus, the $20$s exposure time masterdark must be the one to subtract (even so, a scaling must take place). One the Bias and Dark have been subtracted from each Flat image, by the same means of combining the Bias and Dark images, a \textit{masterflat} was created for each filter (figure \ref{fig: Masterflats}).
     \begin{figure}[H]
       \centering
       \subfloat[][rSDSS]{\includegraphics[width=.4\linewidth]{Images/masterflat_rSDSS.png}}\quad
@@ -100,6 +112,10 @@
       \caption{Combined flats for each filter.}
       \label{fig: Masterflats}
     \end{figure}
+
+    Once all this preparatory work has been made, then the procedure to clean the raw images seen on figure \ref{fig: Raw  Images} can take place; in order to do so, the same procedure must be done to each of the images, but taking into account the used filter. Starting from a concrete raw image, the first step is to remove the masterbias from it, by means of the \textit{ccdp.subtract\_bias} method; then in order to subtract the dark current, the masterdark with the closest exposure time to the image is chosen, and the masterbias is removed from it with the same function, then, the result is subtracted from the image (already subtracted of the bias), and the finally, the Flat Fielding is corrected by means of the \textit{ccdp.flat\_correct} function (using the corresponding filter-masterflat). A sample of the reduced images can be seen at figure \ref{fig: Reduced Images}.
+
+    The result images are coded on \textit{.fit} files, with similar headers as their raw counterpart. 
     
     \begin{figure}[H]
       \centering
@@ -111,6 +127,8 @@
       \label{fig: Reduced Images}
     \end{figure}
 
+    The last step to be made in order to create the catalog is to calibrate the images; as stated previously, the \textit{.fit} headers do not contain a world cordinate system, and in order to obtain one, the online app Astrometry.net (\cite{Astrometry}) was used. There is only need to calibrate one of the images, since they will be lated compared between them, to choose the correct filter to calibrate, a visual analysis was made to determine the one with the most number of visible objects to facilitate later process; as it can be seen on figure \ref{fig: Reduced Images}, the better choice is the rSDSS filter.
+
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Photometric catalogs}\label{sec: Photometric catalogs}
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -119,8 +137,6 @@
     \section{Conclusion}\label{sec: Conclusion}
     
    Sextractor: use "two image mode" first image, must be the "detection" one (the image with better detection range and bigger number of stars) and the second one, the measurement
-
-  \url{ https://nova.astrometry.net/} to calibrate NGC\_6793\_rSDSS.fits
 
 %
 %-------------------------------------------------------------------
