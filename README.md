@@ -10,13 +10,11 @@
 <a href="http://simbad.cds.unistra.fr/simbad/sim-basic?Ident=NGC6793&submit=SIMBAD+search">SIMBAD reference</a>
 
 
-
-If the script worked as spected, this would be the terminal output
+The image reduction process is done following the <a href="http://www.astropy.org/ccd-reduction-and-photometry-guide/v/dev/notebooks/00-00-Preface.html">CCD Data Reduction GUIDE</a>, making use of the (self-made) CCD_Reduction.py scrip. The program takes the needed files fomr the DATA folder, the files are distributed (by type) on the BIAS, DARKS, FLATS and SCIENCE folders. If the script worked as spected, this would be the terminal output
 <p align="center">
   <img src="Images/TerminalOutput.png" width="260" />
 </p>
-
-otherwhise, error messages would appear.
+(otherwhise, error messages would appear). The program uotput (in adition to a log.txt file) can be found at the Results folder, containing a masterflat.fit file, a DARKS folder (containing masterflats with different exposure times) and SCIENCE folder, which contains the reduced images.
 
 
 
