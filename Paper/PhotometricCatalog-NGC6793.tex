@@ -2,9 +2,9 @@
 \documentclass{aa}  
 
 \usepackage{graphicx}
+\usepackage{listings}
 \usepackage{float}
 \usepackage{subcaption}
-\usepackage{mwe}
 \usepackage{txfonts}
 \usepackage{hyperref}
 \hypersetup{
@@ -13,7 +13,7 @@
     filecolor=black,  
     citecolor=black,
     urlcolor=black,
-    pdftitle={Yukawa's meson theory of Nuclear Forces},
+    pdftitle={Photometric catalog of NGC 6793},
     pdfpagemode=FullScreen,
     pdfauthor={Cano Jones, Alejandro},
     pdfcreator={Cano Jones, Alejandro},
@@ -115,7 +115,7 @@
 
     Once all this preparatory work has been made, then the procedure to clean the raw images seen on figure \ref{fig: Raw  Images} can take place; in order to do so, the same procedure must be done to each of the images, but taking into account the used filter. Starting from a concrete raw image, the first step is to remove the masterbias from it, by means of the \textit{ccdp.subtract\_bias} method; then in order to subtract the dark current, the masterdark with the closest exposure time to the image is chosen, and the masterbias is removed from it with the same function, then, the result is subtracted from the image (already subtracted of the bias), and the finally, the Flat Fielding is corrected by means of the \textit{ccdp.flat\_correct} function (using the corresponding filter-masterflat). A sample of the reduced images can be seen at figure \ref{fig: Reduced Images}.
 
-    The result images are coded on \textit{.fit} files, with similar headers as their raw counterpart. 
+    The result images are coded on \textit{.fit} files, with similar headers as their raw counterpart. As can be seen, most (if not all) of the non sky structure has disappeared, and the random noise has been reduced (although not completely removed). It can be seen now the main difference between the images is the amount of visible stars, but the most bright ones seem to be placed on the same coordinates.
     
     \begin{figure}[H]
       \centering
@@ -131,12 +131,84 @@
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Photometric catalogs}\label{sec: Photometric catalogs}
+    Now that the images are usable, it is time to extract some information from them. The data that this paper is interested in is photometric information about the stars that are present in the images on figure \ref{fig: Reduced Images}, and to obtain it, the SExtractor (\cite{SExtractor}) software will be used.
+
+    In order to use SExtractor, two files must be prepared: \textit{default.sex} and \textit{default.param}; both this files can be obtained by means of the '>' pipeline redirection operator and the SExtractor '\textit{sex}' command: 
+    \begin{lstlisting}[language=bash]
+    user@host: ~$ sex -d > default.sex
+    user@host: ~$ sex -dp > default.param
+    \end{lstlisting}
+
+    \begin{itemize}
+        \item The \textit{default.sex} file determines some extraction variables that will become relevant later, for the present work, six different changes will be made to the preset file:
+        \begin{enumerate}
+            \item CATALOG\_NAME $\to$ catalog.fit
+            \item CATALOG\_TYPE $\to$ FITS\_LDAC
+            \item DETECT\_MINAREA $\to$ 25
+            \item DETECT\_THRESH $\to$ 100
+            \item ANALYSIS\_THRESH $\to$ 100
+            \item FILTER $\to$ N
+        the reason for the changes to DETECT\_MINAREA, DETECT\_THRESH and ANALYSIS\_THRESH is that through trial and error, this vales gives the best results.
+        
+        \end{enumerate}
+        \item The \textit{default.param} file determines the output catalog data, for this study, the chosen parameters were selected: NUMBER, MAG\_AUTO, MAGERR\_AUTO, BACKGROUND, THRESHOLD, X\_IMAGE, Y\_IMAGE, ALPHA\_J2000, DELTA\_J2000, FLAGS and FWHM\_IMAGE. 
+    \end{itemize}
+
+    Given that only image that has a world coordinate system is the rSDSS filter one, this will be the only one with different than zero values for the ALPHA\_J2000 and DELTA\_J2000 data. This image has the most visible stars on it, and thus, will be used as a 'detection' image. One of the multiple SExtractor modes is the 'two images mode', where one image is de detection image (from which the stars position will be extracted) and the 'measurement' image (from which the data will be extracted). Now, the first catalog will be for the rSDSS filter, to obtain it, the next command will be executed
+    \begin{lstlisting}
+    user@host:~$ sex rSDSS_file.fit
+    \end{lstlisting}
+    the result of this command will be a '\textit{catalog.fit}' file containing the data selected on the \textit{default.fit} file; since the output of the sex commands will always be a file named 'catalog.fit', the otput will be renamed to \textit{rSDSS\_catalog.fit} (this notation will be used for each filter). Now, to be able to use de rSDSS file as a detection file for (lets say) gSDSS file as a measurement image, the next command (all is one line) will be executed
+    \begin{lstlisting}
+    user@host:~$ sex rSDSS_file.fit gSDS
+    S_file.fit
+    \end{lstlisting}
+    again, the output will be a '\textit{catalog.fit}' file, but this time containing the data measured from the gSDSS filter at the positions detected in the rSDSS image; to not overwrite this file, it has to be renamed. One the rSDSS file catalog was made, the same procedure was executed for the Ha and OIII filter files.
+
+    Once the catalog for each filter has been made, they will be combined using the TOPCAT (\cite{TOPCAT}) software; since all of them share the same detection images, they all share the same X\_IMAGE and Y\_IMAGE, which results useful. Since there is some data that is not useful (X\_IMAGE, Y\_IMAGE, ALPHA\_J2000, DELTA\_J000 for all but rSDSS) this columns will be dropped, in addition to repeated data (NUMBER). The result catalog, therefore has the following information:
+    \begin{itemize}
+        \item NUMBER (identifier).
+        \item ALPHA\_J2000 (RA) and DELTA\_J2000 (DEC).
+        \item MAG\_AUTO (instrumental magnitude) and MAGERR\_AUTO (error to the instrumental magnitude) for each filter.
+        \item BAKCGROUND (background at centroid position) for each filter.
+        \item THRESHOLD (detection threshold above background) for each filter.
+        \item FWHM\_IMAGE (FWHM assuming a gaussian core) for each filter.
+        \item FLAGS (extraction flags) for each filter.
+    \end{itemize}
+
+    Now, as stated above, the measured magnitude is not the real physical apparent magnitude, instead its a instrumental magnitude; in order to obtain a real value of the physical apparent magnitude, the catalog was compared to an existing one, specifically the ATLAS-REFCAT2 (\cite{PhotoCalibrate}) catalog. This catalog contains the apparent magintude on the rSDSS, gSDSS and Ha filters for some stars present in our catalog, and thus, its posible to photocalibrate the MAG\_AUTO magnitudes to obtai the real physical apparent magnitude for those filters; sadly this photocalibration was not possible for the OIII filter. Once this was done, the catalog (stored in a \textit{NGC\_6793\_Catalog.fit} file \cite{GitHub}) is complete.
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Some results obtained from the catalogs}\label{sec: Results}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\linewidth]{Images/mag_Err.png}
+        \caption{ADD CAPTION}
+        \label{fig:my_label}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\linewidth]{Images/mag_histo.png}
+        \caption{ADD CAPTION}
+        \label{fig:my_label}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\linewidth]{Images/HRdiagram_rg.png}
+        \caption{ADD CAPTION}
+        \label{fig:my_label}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\linewidth]{Images/HRdiagram_rgH.png}
+        \caption{ADD CAPTION}
+        \label{fig:my_label}
+    \end{figure}
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Conclusion}\label{sec: Conclusion}
     
    Sextractor: use "two image mode" first image, must be the "detection" one (the image with better detection range and bigger number of stars) and the second one, the measurement
+
+   photometric calibration using https://archive.stsci.edu/hlsp/atlas-refcat2 catalog
 
 %
 %-------------------------------------------------------------------
