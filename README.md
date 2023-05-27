@@ -16,6 +16,10 @@ The image reduction process is done following the <a href="http://www.astropy.or
 </p>
 (otherwhise, error messages would appear). The program uotput (in adition to a log.txt file) can be found at the Results folder, containing a masterflat.fit file, a DARKS folder (containing masterflats with different exposure times) and SCIENCE folder, which contains the reduced images.
 
+The reduced images where later used to create the photometric catalog, using the SExtractor software. Since the files do not contain a world coordinate system, an astrometry process was made to one of the files using the Astrometry.net online app. The resulting catalogs (one for each filter) were combined to a complete catalog contaning de RA, DEC, apparent magnitudes for the rSDSS, gSDSS and Ha filters, alongside of other data.
+
+Complete procedure, methodology and some results can be found on the PhotometricCatalog_NGC6793.pdf paper.
+
 
 
 <!-- START OF LICENSE -->
