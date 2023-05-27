@@ -179,36 +179,51 @@
     Now, as stated above, the measured magnitude is not the real physical apparent magnitude, instead its a instrumental magnitude; in order to obtain a real value of the physical apparent magnitude, the catalog was compared to an existing one, specifically the ATLAS-REFCAT2 (\cite{PhotoCalibrate}) catalog. This catalog contains the apparent magintude on the rSDSS, gSDSS and Ha filters for some stars present in our catalog, and thus, its posible to photocalibrate the MAG\_AUTO magnitudes to obtai the real physical apparent magnitude for those filters; sadly this photocalibration was not possible for the OIII filter. Once this was done, the catalog (stored in a \textit{NGC\_6793\_Catalog.fit} file \cite{GitHub}) is complete.
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Some results obtained from the catalogs}\label{sec: Results}
+    Once the catalogue is completed, it is interesting to visualize some of the data stored in it. First of all, lets compare the apparent magnitude to its error 
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.8\linewidth]{Images/mag_Err.png}
-        \caption{ADD CAPTION}
-        \label{fig:my_label}
+        \caption{Relation between apparent magnitude and its error.}
+        \label{fig: error}
     \end{figure}
+    as it can be seen at figure \ref{fig: error}, the error remains small; considering that it has relation to the signal-to-noise ratio, an error of the order of $10^{-2}$ should be considered as good. This relation is the main reason for the election of the DETECT\_MINAREA, ETECT\_THRESH and ANALYSIS\_THRESH \textit{default.sex} variables, chosen to ensure errors below the $10^{-1}$ order. As it can be seen, the filter with the lowest error is the rSDSS, which is no surprise, since it was the filter used for the detection image.
+
+    Another interesting result might be the distribution of apparent magnitudes, as can be seen at figure \ref{fig: histogram}
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.8\linewidth]{Images/mag_histo.png}
-        \caption{ADD CAPTION}
-        \label{fig:my_label}
+        \caption{Apparent magnitude histogram for each filter}
+        \label{fig: histogram}
+    \end{figure}
+    showing a clear distingtion between the Ha magnitude and the rest of photocalibrated filters.
+
+    Obviously, the most interesting result would be the relations between the magnitudes, that can be seen with the following figures (\ref{fig: Color to Color}, \ref{fig: HR diagram}, \ref{fig:my_label})
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\linewidth]{Images/ColorToColor.png}
+        \caption{Aperent magnitude relations.}
+        \label{fig: Color to Color}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.8\linewidth]{Images/HRdiagram_rg.png}
-        \caption{ADD CAPTION}
-        \label{fig:my_label}
+        \caption{Hertzsprung-Russell diagram.}
+        \label{fig: HR diagram}
     \end{figure}
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.8\linewidth]{Images/HRdiagram_rgH.png}
-        \caption{ADD CAPTION}
+        \caption{Color to Color.}
         \label{fig:my_label}
     \end{figure}
+    
+    Now, to check the reliability of the data, these results might be compared to existing studies, in this case, a possible contestant might be \cite{ClustersPaper}; where there are photometric results on different open clusters, including the NGC 6793 open cluster. A particular interesting comparison can be made from the Hertzsprung-Russell diagrams; which do not seem too similar to the ones presented here (although they are made with different filters). One possible solution to this problem might be explained by crossmatching the catalog to the SIMBAD (\cite{SIMBAD}) database; if done, more than a few stars present in the catalog do not seem to be part of the NGC 6793 open cluster, and thus, might distord the results; this must come by no surprise, given the angular size of the cluster and the images.
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Conclusion}\label{sec: Conclusion}
-    
-   Sextractor: use "two image mode" first image, must be the "detection" one (the image with better detection range and bigger number of stars) and the second one, the measurement
+    Throughout this paper, the path to the reduction, extraction and review of some observational images has been presented. The standard reduction methodology found in the bibliography (\cite{CCD_Guide}) was put on a test achieving good results as can be seen at figure \ref{fig: Reduced Images}. This images were used to obtain a photometric catalog of the stars that appear on them, through the use of popular and reliable software methods (\cite{SExtractor}, \cite{Astrometry}) and this catalog was later edited (using the TOPCAT \cite{TOPCAT} software) in order to obtain correct photometric apparent magnitudes and compare the results to other similar catalogs.
 
-   photometric calibration using https://archive.stsci.edu/hlsp/atlas-refcat2 catalog
+    Although the results seem to differ to the consulted bibliography (\cite{ClustersPaper}), an explanation was found (present of astronomical objects that are not part of the NGC 6793 open cluster, and differences between filters); and thus, more work might be in front of the study of this \textit{poor, little compressed}, cluster.
+    \newpage
 
 %
 %-------------------------------------------------------------------
